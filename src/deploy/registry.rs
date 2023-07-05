@@ -1,3 +1,5 @@
+use clap::ValueEnum;
+
 #[derive(Debug)]
 pub struct Ethereum {
     pub url : String ,
@@ -46,10 +48,10 @@ impl Default for Mumbai {
     }
 }  
 
-#[derive(Clone, Copy)]
+ #[derive(Debug)]
+ #[derive(Clone,ValueEnum)]
 pub enum RainNetworks{
     Ethereum,
     Polygon,
     Mumbai,
-} 
-
+}  

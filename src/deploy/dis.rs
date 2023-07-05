@@ -1,7 +1,10 @@
+use clap::{Parser};
+
+#[derive(Parser,Clone)]
 pub struct DISpair {
-    interpreter : String ,
-    store : String ,
-    deployer : String ,
+    pub interpreter : String ,
+    pub store : String ,
+    pub deployer : String ,
 }  
 
 impl DISpair {
@@ -9,12 +12,12 @@ impl DISpair {
         DISpair { interpreter: i, store: s, deployer: d }
     }
 }
-
+ 
 
 pub fn replace_dis_pair(
-    tx_data : String ,
-    from_dis : DISpair , 
-    to_dis : DISpair
+    tx_data : &String ,
+    from_dis : &DISpair , 
+    to_dis : &DISpair
 ) -> Option<String> { 
 
    let mut ret_str = tx_data.clone().to_lowercase() ;  
@@ -31,3 +34,4 @@ pub fn replace_dis_pair(
 
     Some(ret_str)
 }
+

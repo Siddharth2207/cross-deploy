@@ -1,8 +1,7 @@
 use contract_query::ResponseData;
 use graphql_client::{GraphQLQuery, Response};
 use reqwest;
-use std::error::Error;
-
+use anyhow::{Result};
 use crate::deploy::registry::{RainNetworks, Ethereum, Polygon, Mumbai};
 
 #[derive(GraphQLQuery, Debug)]
@@ -14,12 +13,12 @@ use crate::deploy::registry::{RainNetworks, Ethereum, Polygon, Mumbai};
 pub struct ContractQuery;  
 
 pub async fn get_transaction_hash( 
-    network : RainNetworks ,
-    contract_address : String
-) -> Result<String, Box<dyn Error>> { 
+    network : &RainNetworks ,
+    contract_address : &String
+) -> Result<String> { 
 
     let variable = contract_query::Variables {
-        addr: Some(contract_address),
+        addr: Some(contract_address.to_string()),
     };
 
     let request_body = ContractQuery::build_query(variable);
@@ -43,11 +42,11 @@ pub async fn get_transaction_hash(
         .send()
         .await?; 
 
-    let response_body: Response<contract_query::ResponseData> = res.json().await?;
+    let response_body: Response<contract_query::ResponseData> = res.json().await?; 
 
     let transaction_id = response_body
         .data
-        .and_then(|data: ResponseData|data.contract.unwrap().deploy_transaction.unwrap().id.into());
+        .and_then(|data: ResponseData|data.contract.expect("contract not found").deploy_transaction.expect("tx not found").id.into()); 
 
     Ok(transaction_id.unwrap()) 
 

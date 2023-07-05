@@ -1,15 +1,15 @@
 
 use ethers::providers::{Provider, Middleware, Http} ;
 use ethers::types::{ H256,};
-use std::error::Error;
 use std::str::FromStr;
+use anyhow::{Result};
 
 use super::registry::{RainNetworks, Ethereum, Mumbai, Polygon};
 
 pub async fn get_transaction_data(
-    from_network : RainNetworks ,
-    tx_hash : String
-) -> Result<String, Box<dyn Error>> { 
+    from_network : &RainNetworks ,
+    tx_hash : &String
+) -> Result<String> { 
 
     let url = match from_network {
         RainNetworks::Ethereum => {
@@ -29,4 +29,5 @@ pub async fn get_transaction_data(
     let tx_data = provider.get_transaction(h).await?.unwrap().input.to_string(); 
     Ok(tx_data) 
 
-}
+} 
+
