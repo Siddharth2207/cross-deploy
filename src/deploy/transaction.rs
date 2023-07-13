@@ -1,4 +1,3 @@
-
 use ethers::providers::{Provider, Middleware, Http} ;
 use ethers::types::{ H256,};
 use std::str::FromStr;
@@ -6,10 +5,7 @@ use anyhow::{Result};
 
 use super::registry::{RainNetworks, Ethereum, Mumbai, Polygon};
 
-pub async fn get_transaction_data(
-    from_network : &RainNetworks ,
-    tx_hash : &String
-) -> Result<String> { 
+pub async fn get_transaction_data(from_network : &RainNetworks ,tx_hash : &String) -> Result<String> { 
 
     let url = match from_network {
         RainNetworks::Ethereum => {

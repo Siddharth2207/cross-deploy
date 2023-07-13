@@ -2,7 +2,7 @@
 name = "cross-deploy"
 version = "0.1.0"
 edition = "2021"
-
+description = "Rain cli tooling for cross deploying consumer contracts"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
